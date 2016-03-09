@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<HotKeys>
+  <HotKey Key="76" Modifier="3" Command="notepad.exe" Argument="" WorkingDir="" WindowStyle="0" NewInstance="False" Priority="32" />
+</HotKeys>
