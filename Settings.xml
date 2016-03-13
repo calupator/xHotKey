@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <HotKeys>
-  <HotKey Key="76" Modifier="3" Command="notepad.exe" Argument="" WorkingDir="" WindowStyle="0" NewInstance="False" Priority="32" />
+  <HotKey Name="Блокнот" Path="notepad.exe" Argument="" WorkingDir="" Sound="" Modifier="3" Key="76" WindowStyle="61728" Priority="32" Command="0" NewInstance="False" />
 </HotKeys>

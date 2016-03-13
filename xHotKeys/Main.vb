@@ -3,7 +3,7 @@ Imports System.Runtime.Serialization.Formatters.Soap
 Imports CoreAudioApi
 
 Public Class Main
-    Dim hk As New Dictionary(Of HotKey, Integer)
+    Dim hk As New Dictionary(Of Integer, HotKey)
     Const FileSettings As String = "Settings.xml"
     Private device As MMDevice
 
@@ -19,10 +19,11 @@ Public Class Main
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Settings.File(FileSettings)
+        HotKey.SetHandle(Me.Handle)
         hk = Settings.LoadHK(Me.Handle)
 
-        For Each it As KeyValuePair(Of HotKey, Integer) In hk
-            it.Key.Register()
+        For Each it As KeyValuePair(Of Integer, HotKey) In hk
+            it.Value.Register()
         Next
 
 
@@ -49,13 +50,13 @@ Public Class Main
         ' Listen for operating system messages
         Select Case (m.Msg)
             Case WM_HOTKEY
-                If hk.ContainsValue(m.WParam.ToInt32()) Then
+                If hk.ContainsKey(m.WParam.ToInt32()) Then
                     For Each it In hk
 
                         ' Check that the ID is our key and we are registerd
-                        If it.Key.IsRegistered AndAlso (m.WParam.ToInt32() = it.Key.GetID) Then
+                        If it.Value.IsRegister AndAlso (m.WParam.ToInt32() = it.Value.GetID) Then
                             ' Fire the event and pass on the event if our handlers didn't handle it
-                            it.Key.Execute()
+                            it.Value.Execute()
                         End If
 
                     Next

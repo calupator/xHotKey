@@ -12,45 +12,52 @@ Public Class Settings
         FilePath = file
     End Sub
 
-    Public Shared Function LoadHK(ByVal hwnd As IntPtr) As Dictionary(Of HotKey, Integer)
+    Public Shared Function LoadHK(ByVal hwnd As IntPtr) As Dictionary(Of Integer, HotKey)
         Dim xmldoc As New XmlDocument()
         xmldoc.Load(FilePath)
         Dim xmlList As XmlNodeList = xmldoc.DocumentElement.ChildNodes
 
-        Dim HKeys As New Dictionary(Of HotKey, Integer)
+        Dim HKeys As New Dictionary(Of Integer, HotKey)
         For Each nodeOrder As XmlNode In xmlList
-            Dim Hkey As New HotKey(hwnd)
+            'Dim Hkey As New HotKey(hwnd)
+            Dim Hkey As New HotKey()
             With Hkey
-                .Key = nodeOrder.Attributes("Key").Value
-                .Command = nodeOrder.Attributes("Command").Value
-                .Modifier = nodeOrder.Attributes("Modifier").Value
+                .Name = nodeOrder.Attributes("Name").Value
+                .Path = nodeOrder.Attributes("Path").Value
                 .Argument = nodeOrder.Attributes("Argument").Value
                 .WorkingDir = nodeOrder.Attributes("WorkingDir").Value
-                .WindowStyle = nodeOrder.Attributes("WindowStyle").Value
-                .NewInstance = nodeOrder.Attributes("NewInstance").Value
+                .Sound = nodeOrder.Attributes("Sound").Value
+                .Modifier = nodeOrder.Attributes("Modifier").Value
+                .Key = nodeOrder.Attributes("Key").Value
+                .WindowStyle = CType(nodeOrder.Attributes("WindowStyle").Value, WindowState)
                 .Priority = nodeOrder.Attributes("Priority").Value
+                .Command = CInt(nodeOrder.Attributes("Command").Value)
+                .NewInstance = nodeOrder.Attributes("NewInstance").Value
             End With
-            HKeys.Add(Hkey, Hkey.GetID)
+            HKeys.Add(Hkey.GetID, Hkey)
         Next
         Return HKeys
     End Function
 
-    Public Shared Sub SaveHK(ByVal HKeys As Dictionary(Of HotKey, Integer))
+    Public Shared Sub SaveHK(ByVal HKeys As Dictionary(Of Integer, HotKey))
         Dim xDoc As New XmlTextWriter(FilePath, System.Text.Encoding.GetEncoding(1251))
         xDoc.WriteStartDocument()
         xDoc.Formatting = System.Xml.Formatting.Indented
         xDoc.Indentation = 2
         xDoc.WriteStartElement("HotKeys")
-        For Each it As KeyValuePair(Of HotKey, Integer) In HKeys
+        For Each it As KeyValuePair(Of Integer, HotKey) In HKeys
             xDoc.WriteStartElement("HotKey")
-            xDoc.WriteAttributeString("Key", it.Key.Key)
-            xDoc.WriteAttributeString("Modifier", it.Key.Modifier)
-            xDoc.WriteAttributeString("Command", it.Key.Command)
-            xDoc.WriteAttributeString("Argument", it.Key.Argument)
-            xDoc.WriteAttributeString("WorkingDir", it.Key.WorkingDir)
-            xDoc.WriteAttributeString("WindowStyle", it.Key.WindowStyle)
-            xDoc.WriteAttributeString("NewInstance", it.Key.NewInstance)
-            xDoc.WriteAttributeString("Priority", it.Key.Priority)
+            xDoc.WriteAttributeString("Name", it.Value.Name)
+            xDoc.WriteAttributeString("Path", it.Value.Path)
+            xDoc.WriteAttributeString("Argument", it.Value.Argument)
+            xDoc.WriteAttributeString("WorkingDir", it.Value.WorkingDir)
+            xDoc.WriteAttributeString("Sound", it.Value.Sound)
+            xDoc.WriteAttributeString("Modifier", it.Value.Modifier)
+            xDoc.WriteAttributeString("Key", it.Value.Key)
+            xDoc.WriteAttributeString("WindowStyle", it.Value.WindowStyle)
+            xDoc.WriteAttributeString("Priority", it.Value.Priority)
+            xDoc.WriteAttributeString("Command", it.Value.Command)
+            xDoc.WriteAttributeString("NewInstance", it.Value.NewInstance)
             xDoc.WriteEndElement()
 
         Next
