@@ -26,13 +26,14 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.tbMaster = New System.Windows.Forms.TrackBar
         Me.TrayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.txtHotKey = New xHotKeys.WinHotKey
         CType(Me.tbMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'tbMaster
         '
         Me.tbMaster.LargeChange = 20
-        Me.tbMaster.Location = New System.Drawing.Point(120, 25)
+        Me.tbMaster.Location = New System.Drawing.Point(433, 12)
         Me.tbMaster.Maximum = 100
         Me.tbMaster.Name = "tbMaster"
         Me.tbMaster.Orientation = System.Windows.Forms.Orientation.Vertical
@@ -47,11 +48,20 @@ Partial Class Main
         Me.TrayIcon.Text = "NotifyIcon1"
         Me.TrayIcon.Visible = True
         '
+        'txtHotKey
+        '
+        Me.txtHotKey.Location = New System.Drawing.Point(266, 289)
+        Me.txtHotKey.Name = "txtHotKey"
+        Me.txtHotKey.Size = New System.Drawing.Size(185, 20)
+        Me.txtHotKey.TabIndex = 3
+        Me.txtHotKey.Text = "Ctrl + R"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 262)
+        Me.ClientSize = New System.Drawing.Size(490, 361)
+        Me.Controls.Add(Me.txtHotKey)
         Me.Controls.Add(Me.tbMaster)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -65,5 +75,11 @@ Partial Class Main
     End Sub
     Private WithEvents tbMaster As System.Windows.Forms.TrackBar
     Friend WithEvents TrayIcon As System.Windows.Forms.NotifyIcon
+#If DEBUG Then
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents txtHotKey As xHotKeys.WinHotKey
+#Else
+    Friend WithEvents TextBox1 As WinHotKey
+#End If
 
 End Class

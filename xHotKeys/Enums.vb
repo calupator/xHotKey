@@ -8,15 +8,12 @@ Public Enum Modifiers
 End Enum
 
 Public Enum WindowState
+    '''<summary>Normalizes the window.</summary>
+    Normal = 0
     '''<summary>Minimizes the window.</summary>
-    Minimize = &HF020 ' SC_MINIMIZE
-
+    Minimize
     '''<summary>Maximizes the window.</summary>
-    Maximize = &HF030 ' SC_MAXIMIZE
-
-    '''<summary>Restores the window to its normal position and size.</summary>
-    Restore = &HF120 ' SC_RESTORE
-    Normal = &HF120 ' SC_RESTORE
+    Maximize
 End Enum
 
 Public Enum Command
