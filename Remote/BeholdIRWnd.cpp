@@ -2,14 +2,16 @@
 #include "BeholdIRWnd.h"
 #include "BeholdProc.h"
 #include "resource.h"
+#include "Remote.h"
 
 char CBeholdIRWnd::ClassName[] = "BeholderRC";
 CBeholdIRWnd*	CBeholdIRWnd::s_beholdIRWnd = NULL;
 
-CBeholdIRWnd::CBeholdIRWnd(HINSTANCE hInst)
+CBeholdIRWnd::CBeholdIRWnd(HINSTANCE hInst, LPWSTR *namedPipe)
     : m_instance(hInst),
-      m_window(NULL)	  
+      m_window(NULL)
 {
+	  Pipe = namedPipe;
   if (s_beholdIRWnd != NULL)
   {
     throw ("ErrDupInst");
@@ -64,7 +66,7 @@ bool CBeholdIRWnd::Initialize()
 	if (!InitInstance())
 		return false;
 
-	beholdProcess = new BeholdProc(m_window);
+	beholdProcess = new BeholdProc(m_window, Pipe);
 	beholdProcess->Start();
   
   return true;

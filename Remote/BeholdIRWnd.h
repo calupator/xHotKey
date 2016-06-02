@@ -17,7 +17,7 @@ class CBeholdIRWnd
 {
 public:
 	static char ClassName[];
-	CBeholdIRWnd(HINSTANCE hInst);
+	CBeholdIRWnd(HINSTANCE hInst, LPWSTR *namedPipe);
 	~CBeholdIRWnd(void);
 
 	void Run();
@@ -34,6 +34,7 @@ protected:
 	HINSTANCE       m_instance;
 	HWND            m_window;
 	BeholdProc		*beholdProcess;
+	LPWSTR *Pipe;
 
 protected:
 	static DWORD m_dwLastExec;

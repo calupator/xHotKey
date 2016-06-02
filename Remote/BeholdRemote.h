@@ -1,15 +1,17 @@
 #pragma once
 #include "thread.h"
 #include "BeholdProc.h"
+#include "stdafx.h"
 
 static BeholderRC *remote;
+
 class BeholdRemote 
 	: public Thread
 {
 public:
-	BeholdRemote()
+	BeholdRemote(char* namePipeGetKey)
 	{
-		wsprintf(szPipeName, "%s", "\\\\.\\pipe\\NewPipe1");
+		sprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeGetKey);
 	}
 
 	~BeholdRemote()
@@ -73,9 +75,9 @@ class BeholdInfo
 	: public Thread
 {
 public:
-	BeholdInfo()
+	BeholdInfo(char* namePipeInfo)
 	{
-		wsprintf(szPipeName, "%s", "\\\\.\\pipe\\NewPipe");
+		wsprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeInfo);
 	}
 
 	~BeholdInfo()

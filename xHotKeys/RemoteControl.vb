@@ -6,7 +6,8 @@ Public Class RemoteControl
     Dim pipeClient As New Process
     Dim thInfo As Thread
     Dim thGetKey As Thread
-    Dim namePipe As String = "NewPipe"
+    Dim namePipeInfo As String
+    Dim namePipeGetKey As String
     Dim Closing As Boolean = 0
     Dim pipeServer As NamedPipeServerStream
     Dim srInfo As StreamReader
@@ -17,6 +18,12 @@ Public Class RemoteControl
     Public Event RemotKey(ByVal key As Integer)
 
     Public Sub New(ByVal SurrProc As String)
+        namePipeInfo = New Guid("eeb9cfdb-605c-4ea4-8a94-65de7fb39c61").ToString
+        namePipeGetKey = New Guid("f5742441-9c9e-4cb2-9dbb-2943c6a840ec").ToString
+        'namePipeInfo = Guid.NewGuid.ToString
+        'namePipeGetKey = Guid.NewGuid.ToString
+        ' pipeClient.StartInfo.Arguments = namePipeInfo & " " & namePipeGetKey
+
         pipeClient.StartInfo.FileName = AppDomain.CurrentDomain.SetupInformation.ApplicationBase & SurrProc
         pipeClient.StartInfo.UseShellExecute = False
 
@@ -25,7 +32,7 @@ Public Class RemoteControl
 
         thInfo.Start()
         thGetKey.Start()
-        pipeServer = New NamedPipeServerStream(namePipe, PipeDirection.InOut)
+        pipeServer = New NamedPipeServerStream(namePipeInfo, PipeDirection.InOut)
 
     End Sub
 
@@ -62,7 +69,7 @@ Public Class RemoteControl
     End Sub
 
     Private Sub thGetKeyMethod()
-        Dim pipeRecive As New NamedPipeServerStream(namePipe & "1", PipeDirection.In)
+        Dim pipeRecive As New NamedPipeServerStream(namePipeGetKey, PipeDirection.In)
         pipeRecive.WaitForConnection()
         srGetKey = New StreamReader(pipeRecive)
         While (Not Closing)
@@ -74,8 +81,7 @@ Public Class RemoteControl
     End Sub
 
     Private Sub thInfoMethod()
-        pipeClient.StartInfo.Arguments = namePipe
-        pipeClient.Start()
+        'pipeClient.Start()
 
         ' Wait for a client to connect
         pipeServer.WaitForConnection()

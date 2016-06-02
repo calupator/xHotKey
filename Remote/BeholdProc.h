@@ -15,10 +15,15 @@ public:
 	BeholdInfo		*info;
 	BeholdRemote	*readKey;
 	HWND			pointer;
-	BeholdProc(HWND data = NULL, char *argv = NULL)
+
+	BeholdProc(HWND data = NULL, LPWSTR *nPipe = NULL)
 	{
-		info = new BeholdInfo();
-		readKey = new BeholdRemote();
+		char* namedPipe = new char;
+		sprintf(namedPipe, "%S", nPipe[1]);
+		info = new BeholdInfo(namedPipe);
+
+		sprintf(namedPipe, "%S", nPipe[2]);
+		readKey = new BeholdRemote(namedPipe);
 		pointer = data;
 		remote = new BeholderRC();
 	}
