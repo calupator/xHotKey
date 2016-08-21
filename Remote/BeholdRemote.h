@@ -11,7 +11,8 @@ class BeholdRemote
 public:
 	BeholdRemote(char* namePipeGetKey)
 	{
-		sprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeGetKey);
+		sprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", "pipe2");
+		//sprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeGetKey);
 	}
 
 	~BeholdRemote()
@@ -77,7 +78,8 @@ class BeholdInfo
 public:
 	BeholdInfo(char* namePipeInfo)
 	{
-		wsprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeInfo);
+		wsprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", "pipe1");
+		//wsprintf(szPipeName, "%s%s", "\\\\.\\pipe\\", namePipeInfo);
 	}
 
 	~BeholdInfo()

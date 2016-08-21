@@ -67,6 +67,7 @@ bool CBeholdIRWnd::Initialize()
 		return false;
 
 	beholdProcess = new BeholdProc(m_window, Pipe);
+	//Sleep(1000);
 	beholdProcess->Start();
   
   return true;

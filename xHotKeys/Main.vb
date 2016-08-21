@@ -34,13 +34,13 @@ Public Class Main
     End Sub
 
     Private Sub remotekey(ByVal key As Integer) Handles remote.RemotKey
-        TextBox1.BeginInvoke(New InvokeDelegate(AddressOf InvokeMethod), key)
+        TextBox2.BeginInvoke(New InvokeDelegate(AddressOf InvokeMethod), key)
     End Sub 'Invoke_Click
 
     Public Sub InvokeMethod(ByVal key As Integer)
-        TextBox1.Text += "Код нажатой кнопки: " & Hex(key) & Environment.NewLine
-        TextBox1.Select(TextBox1.TextLength, 0)
-        TextBox1.ScrollToCaret()
+        TextBox2.Text += "Код нажатой кнопки: " & Hex(key) & Environment.NewLine
+        TextBox2.Select(TextBox2.TextLength, 0)
+        TextBox2.ScrollToCaret()
     End Sub
 
     Private Sub AudioEndpointVolume_OnVolumeNotification(ByVal data As AudioVolumeNotificationData)
