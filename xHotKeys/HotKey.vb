@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports CoreAudioApi
 
 
 Public Class HotKey
@@ -17,6 +18,7 @@ Public Class HotKey
     <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
     Private Shared Function UnregisterHotKey(ByVal hWnd As IntPtr, ByVal id As Integer) As Integer
     End Function
+    Private device As MMDevice
 
     Private Shared hwnd As IntPtr
     Private _name As String ' Название команды
@@ -42,13 +44,29 @@ Public Class HotKey
         _sound = ""
         _modif = Modifiers.None
         _vKey = Keys.None
-        _winStyle = ProcessWindowStyle.Normal
+        _winStyle = WindowState.Normal
         _priority = ProcessPriorityClass.Normal
         _cmd = xHotKeys.Command.None
         _isRegister = False
         _id = GetHashCode()
         _newInst = False
+        Dim DevEnum As New MMDeviceEnumerator()
+        device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia)
     End Sub
+
+    Public Shared Operator =(ByVal lhk As HotKey, ByVal rhk As HotKey) As Boolean
+        If (lhk._modif = rhk._modif) And (lhk._vKey = rhk._vKey) Then
+            Return True
+        End If
+        Return False
+    End Operator
+
+    Public Shared Operator <>(ByVal lhk As HotKey, ByVal rhk As HotKey) As Boolean
+        If (lhk._modif <> rhk._modif) And (lhk._vKey <> rhk._vKey) Then
+            Return True
+        End If
+        Return False
+    End Operator
 
     Private Sub New(ByVal handle As IntPtr)
         hwnd = handle
@@ -59,7 +77,7 @@ Public Class HotKey
         _sound = ""
         _modif = Modifiers.None
         _vKey = Keys.None
-        _winStyle = ProcessWindowStyle.Normal
+        _winStyle = WindowState.Normal
         _priority = ProcessPriorityClass.Normal
         _cmd = xHotKeys.Command.None
         _isRegister = False
@@ -223,8 +241,14 @@ Public Class HotKey
             proc.Start()
             'proc.StartInfo.WindowStyle = winStyle
             proc.PriorityClass = _priority
-            SendMessage(proc.MainWindowHandle, &H112, _winStyle, 0)
-            SendMessage(proc.MainWindowHandle, &H112, _winStyle, 0)
+            Select Case _winStyle
+                Case WindowState.Normal
+                    SendMessage(proc.MainWindowHandle, &H112, &HF120, 0)
+                Case WindowState.Minimize
+                    SendMessage(proc.MainWindowHandle, &H112, &HF020, 0)
+                Case WindowState.Maximize
+                    SendMessage(proc.MainWindowHandle, &H112, &HF030, 0)
+            End Select
         End If
         'End If
         'End If
@@ -235,8 +259,10 @@ Public Class HotKey
     Private Sub ShellCommand()
         Select Case _cmd
             Case xHotKeys.Command.VolUp
+                device.AudioEndpointVolume.MasterVolumeLevelScalar += 5 / 100.0F
 
             Case xHotKeys.Command.VoplDown
+                device.AudioEndpointVolume.MasterVolumeLevelScalar -= 5 / 100.0F
 
         End Select
     End Sub

@@ -1,23 +1,33 @@
 ﻿Imports System.IO
-Imports System.Runtime.Serialization.Formatters.Soap
 Imports CoreAudioApi
+Imports BEHOLDSERVICELib
 
 Public Class Main
     Dim hk As New Dictionary(Of Integer, HotKey)
     Const FileSettings As String = "Settings.xml"
     Private device As MMDevice
+    WithEvents beholder As IBeholderRC
 
     Private Sub Form1_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        'Dim TestFileStream As Stream = File.Create(FileName)
-        'Dim serializer As New SoapFormatter
-        'serializer.Serialize(TestFileStream, hk)
-        'TestFileStream.Close()
         TrayIcon.Visible = False
 
         Settings.SaveHK(hk)
     End Sub
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        beholder = New BeholderRC
+        beholder.Run("notepad.exe")
+        Dim count As UInteger
+        beholder.GetCount(count)
+        cbTuner.Items.Clear()
+        For i = 0 To count - 1
+            cbTuner.Items.Add(beholder.Name(i))
+        Next
+        cbTuner.SelectedIndex = cbTuner.FindString("Behold")
+        beholder.SelectCard(CULng(cbTuner.SelectedIndex))
+Dim code As UInteger 
+        beholder.GetRemoteEx(code)
+
         Settings.File(FileSettings)
         HotKey.SetHandle(Me.Handle)
         hk = Settings.LoadHK(Me.Handle)
@@ -25,8 +35,6 @@ Public Class Main
         For Each it As KeyValuePair(Of Integer, HotKey) In hk
             it.Value.Register()
         Next
-
-
         Dim DevEnum As New MMDeviceEnumerator()
         device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia)
         tbMaster.Value = CInt(Fix(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100))
@@ -52,17 +60,13 @@ Public Class Main
             Case WM_HOTKEY
                 If hk.ContainsKey(m.WParam.ToInt32()) Then
                     For Each it In hk
-
                         ' Check that the ID is our key and we are registerd
                         If it.Value.IsRegister AndAlso (m.WParam.ToInt32() = it.Value.GetID) Then
                             ' Fire the event and pass on the event if our handlers didn't handle it
                             it.Value.Execute()
                         End If
-
                     Next
                 End If
-
-
         End Select
         MyBase.WndProc(m)
     End Sub
@@ -72,10 +76,11 @@ Public Class Main
     End Sub
 
     Public Sub New()
-
         ' Этот вызов необходим конструктору форм Windows.
         InitializeComponent()
-
+#If DEBUG Then
+        'TextBox1 = New WinHotKey
+#End If
         ' Добавьте все инициализирующие действия после вызова InitializeComponent().
         TrayIcon.Icon = My.Resources.appIcon
         TrayIcon.Text = Application.ProductName + " " + Application.ProductVersion
@@ -87,4 +92,12 @@ Public Class Main
     Private Sub TrayIcon_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TrayIcon.MouseDoubleClick
         Me.Visible = Not Me.Visible
     End Sub
+
+    Private Sub cbTuner_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTuner.SelectedIndexChanged
+        beholder.SelectCard(cbTuner.SelectedIndex)
+        Label1.Text = "Инициализация выполнена успешно!"
+        Label1.ForeColor = Color.Green
+    End Sub
+
+
 End Class

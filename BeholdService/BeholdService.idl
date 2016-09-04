@@ -1,0 +1,45 @@
+// BeholdService.idl : IDL source for BeholdService.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (BeholdService.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(BB26B5BE-A47B-4477-B7D6-734F569FEEAA),
+		dual,
+		helpstring("IBeholderRC Interface"),
+		pointer_default(unique)
+	]
+	interface IBeholderRC : IDispatch
+	{
+		[id(1), helpstring("method Run")] HRESULT Run(BSTR bcstr);
+		[id(2)] HRESULT GetRemoteEx([out] ULONG* code);
+		[id(3)] HRESULT GetRemote([out] ULONG* code);
+		[id(4)] HRESULT GetCount([out] ULONG* count);
+		[id(5)] HRESULT SelectCard([in] ULONG* index/*, [out] ULONG* succes*/);
+		[propget, id(6), helpstring("свойство Name")] HRESULT Name([in] ULONG index, [out, retval] BSTR* pVal);
+		[id(7), helpstring("метод Remote"), source] HRESULT Remote(ULONG code, ULONG codeEx);
+	};
+
+[
+	uuid(9F9E2341-A762-4FF4-9006-66024E29DDD1),
+	version(1.0),
+	helpstring("BeholdService 1.0 Type Library")
+]
+library BEHOLDSERVICELib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(BF7C066C-904C-447E-A457-48B43F9D7959),
+		helpstring("BeholderRC Class")
+	]
+	coclass BeholderRC
+	{
+		[default] interface IBeholderRC;
+	};
+};

@@ -23,18 +23,27 @@ Public Class Settings
             Dim Hkey As New HotKey()
             With Hkey
                 .Name = nodeOrder.Attributes("Name").Value
-                .Path = nodeOrder.Attributes("Path").Value
-                .Argument = nodeOrder.Attributes("Argument").Value
-                .WorkingDir = nodeOrder.Attributes("WorkingDir").Value
-                .Sound = nodeOrder.Attributes("Sound").Value
-                .Modifier = nodeOrder.Attributes("Modifier").Value
                 .Key = nodeOrder.Attributes("Key").Value
-                .WindowStyle = CType(nodeOrder.Attributes("WindowStyle").Value, WindowState)
-                .Priority = nodeOrder.Attributes("Priority").Value
+                .Modifier = nodeOrder.Attributes("Modifier").Value
+                .Sound = nodeOrder.Attributes("Sound").Value
                 .Command = CInt(nodeOrder.Attributes("Command").Value)
-                .NewInstance = nodeOrder.Attributes("NewInstance").Value
+                If .Command = 0 Then
+                    .Path = nodeOrder.Attributes("Path").Value
+                    .Argument = nodeOrder.Attributes("Argument").Value
+                    .WorkingDir = nodeOrder.Attributes("WorkingDir").Value
+                    .WindowStyle = CType(nodeOrder.Attributes("WindowStyle").Value, WindowState)
+                    .Priority = nodeOrder.Attributes("Priority").Value
+                    .NewInstance = nodeOrder.Attributes("NewInstance").Value
+                End If
             End With
-            HKeys.Add(Hkey.GetID, Hkey)
+            Dim present As Boolean = False
+            For Each it As KeyValuePair(Of Integer, HotKey) In HKeys
+                If it.Value = Hkey Then
+                    present = True
+                    Exit For
+                End If
+            Next
+            If Not present Then HKeys.Add(Hkey.GetID, Hkey)
         Next
         Return HKeys
     End Function
@@ -48,23 +57,23 @@ Public Class Settings
         For Each it As KeyValuePair(Of Integer, HotKey) In HKeys
             xDoc.WriteStartElement("HotKey")
             xDoc.WriteAttributeString("Name", it.Value.Name)
-            xDoc.WriteAttributeString("Path", it.Value.Path)
-            xDoc.WriteAttributeString("Argument", it.Value.Argument)
-            xDoc.WriteAttributeString("WorkingDir", it.Value.WorkingDir)
-            xDoc.WriteAttributeString("Sound", it.Value.Sound)
-            xDoc.WriteAttributeString("Modifier", it.Value.Modifier)
             xDoc.WriteAttributeString("Key", it.Value.Key)
-            xDoc.WriteAttributeString("WindowStyle", it.Value.WindowStyle)
-            xDoc.WriteAttributeString("Priority", it.Value.Priority)
+            xDoc.WriteAttributeString("Modifier", it.Value.Modifier)
+            xDoc.WriteAttributeString("Sound", it.Value.Sound)
             xDoc.WriteAttributeString("Command", it.Value.Command)
-            xDoc.WriteAttributeString("NewInstance", it.Value.NewInstance)
+            If it.Value.Command = 0 Then
+                xDoc.WriteAttributeString("Path", it.Value.Path)
+                xDoc.WriteAttributeString("Argument", it.Value.Argument)
+                xDoc.WriteAttributeString("WorkingDir", it.Value.WorkingDir)
+                xDoc.WriteAttributeString("WindowStyle", it.Value.WindowStyle)
+                xDoc.WriteAttributeString("Priority", it.Value.Priority)
+                xDoc.WriteAttributeString("NewInstance", it.Value.NewInstance)
+            End If
             xDoc.WriteEndElement()
-
         Next
         xDoc.WriteEndElement()
         xDoc.Flush()
         xDoc.Close()
-
     End Sub
 
 End Class
