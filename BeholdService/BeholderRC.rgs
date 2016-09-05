@@ -17,8 +17,8 @@ HKCR
 			VersionIndependentProgID = s 'BeholdService.BeholderRC'
 			ForceRemove 'Programmable'
 			LocalServer32 = s '%MODULE%'
-			val AppID = s '{CAEBDD8E-F357-4D35-B329-59C6761ECCCF}'
-			'TypeLib' = s '{9F9E2341-A762-4FF4-9006-66024E29DDD1}'
+			val AppID = s '{AF365512-25FC-4899-BF11-88D9CB2BF9FA}'
+			'TypeLib' = s '{BADE98B6-B459-41F5-B998-4DB8A6D05C34}'
 		}
 	}
 }

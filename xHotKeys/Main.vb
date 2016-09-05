@@ -1,12 +1,11 @@
 ﻿Imports System.IO
 Imports CoreAudioApi
-Imports BEHOLDSERVICELib
 
 Public Class Main
-    Dim hk As New Dictionary(Of Integer, HotKey)
+    Private hk As New Dictionary(Of Integer, HotKey)
     Const FileSettings As String = "Settings.xml"
     Private device As MMDevice
-    WithEvents beholder As IBeholderRC
+    Private beholder As New Beholder
 
     Private Sub Form1_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         TrayIcon.Visible = False
@@ -15,18 +14,15 @@ Public Class Main
     End Sub
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        beholder = New BeholderRC
         beholder.Run("notepad.exe")
-        Dim count As UInteger
-        beholder.GetCount(count)
+        Dim count As UInteger = beholder.Count
         cbTuner.Items.Clear()
         For i = 0 To count - 1
             cbTuner.Items.Add(beholder.Name(i))
         Next
         cbTuner.SelectedIndex = cbTuner.FindString("Behold")
         beholder.SelectCard(CULng(cbTuner.SelectedIndex))
-Dim code As UInteger 
-        beholder.GetRemoteEx(code)
+
 
         Settings.File(FileSettings)
         HotKey.SetHandle(Me.Handle)
@@ -77,13 +73,12 @@ Dim code As UInteger
 
     Public Sub New()
         ' Этот вызов необходим конструктору форм Windows.
+
         InitializeComponent()
-#If DEBUG Then
-        'TextBox1 = New WinHotKey
-#End If
+
         ' Добавьте все инициализирующие действия после вызова InitializeComponent().
         TrayIcon.Icon = My.Resources.appIcon
-        TrayIcon.Text = Application.ProductName + " " + Application.ProductVersion
+        TrayIcon.Text = Application.ProductName + Chr(32) + Application.ProductVersion
         TrayIcon.Visible = True
         Me.Text = TrayIcon.Text
         Me.Icon = My.Resources.appIcon
@@ -94,9 +89,14 @@ Dim code As UInteger
     End Sub
 
     Private Sub cbTuner_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTuner.SelectedIndexChanged
-        beholder.SelectCard(cbTuner.SelectedIndex)
-        Label1.Text = "Инициализация выполнена успешно!"
-        Label1.ForeColor = Color.Green
+        If beholder.SelectCard(cbTuner.SelectedIndex) Then
+            Label1.Text = "Инициализация выполнена успешно!"
+            Label1.ForeColor = Color.Green
+        Else
+            Label1.Text = "Ошибка инициализации!"
+            Label1.ForeColor = Color.Red
+        End If
+
     End Sub
 
 

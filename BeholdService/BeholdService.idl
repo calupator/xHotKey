@@ -8,24 +8,23 @@ import "oaidl.idl";
 import "ocidl.idl";
 	[
 		object,
-		uuid(BB26B5BE-A47B-4477-B7D6-734F569FEEAA),
+		uuid(A3CABF23-7E52-4995-9927-605B1E8DB0E5),
 		dual,
 		helpstring("IBeholderRC Interface"),
 		pointer_default(unique)
 	]
 	interface IBeholderRC : IDispatch
 	{
-		[id(1), helpstring("method Run")] HRESULT Run(BSTR bcstr);
-		[id(2)] HRESULT GetRemoteEx([out] ULONG* code);
-		[id(3)] HRESULT GetRemote([out] ULONG* code);
-		[id(4)] HRESULT GetCount([out] ULONG* count);
-		[id(5)] HRESULT SelectCard([in] ULONG* index/*, [out] ULONG* succes*/);
-		[propget, id(6), helpstring("свойство Name")] HRESULT Name([in] ULONG index, [out, retval] BSTR* pVal);
-		[id(7), helpstring("метод Remote"), source] HRESULT Remote(ULONG code, ULONG codeEx);
+		[propget, id(1), helpstring("property Name")] HRESULT Name([in] ULONG index, [out, retval] BSTR *pVal);
+		[propget, id(2), helpstring("property Count")] HRESULT Count([out, retval] ULONG* count);
+		[id(3), helpstring("method Run")] HRESULT Run([in] BSTR* bcstr, [out, retval] VARIANT_BOOL *succes);
+		[id(4), helpstring("method SelectCard")] HRESULT SelectCard([in] ULONG* index, [out, retval] VARIANT_BOOL* succes);
+		[id(5), helpstring("method GetRemote")] HRESULT GetRemote([out, retval] ULONG* code);
+		[id(6), helpstring("method GetRemoteEx")] HRESULT GetRemoteEx([out, retval] ULONG* code);
 	};
 
 [
-	uuid(9F9E2341-A762-4FF4-9006-66024E29DDD1),
+	uuid(BADE98B6-B459-41F5-B998-4DB8A6D05C34),
 	version(1.0),
 	helpstring("BeholdService 1.0 Type Library")
 ]

@@ -61,7 +61,7 @@ inline HRESULT CServiceModule::RegisterServer(BOOL bRegTypeLib, BOOL bService)
         return lRes;
 
     CRegKey key;
-    lRes = key.Open(keyAppID, _T("{CAEBDD8E-F357-4D35-B329-59C6761ECCCF}"), KEY_WRITE);
+    lRes = key.Open(keyAppID, _T("{AF365512-25FC-4899-BF11-88D9CB2BF9FA}"), KEY_WRITE);
     if (lRes != ERROR_SUCCESS)
         return lRes;
     key.DeleteValue(_T("LocalService"));
@@ -391,7 +391,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance,
         return lRes;
 
     CRegKey key;
-    lRes = key.Open(keyAppID, _T("{CAEBDD8E-F357-4D35-B329-59C6761ECCCF}"), KEY_READ);
+    lRes = key.Open(keyAppID, _T("{AF365512-25FC-4899-BF11-88D9CB2BF9FA}"), KEY_READ);
     if (lRes != ERROR_SUCCESS)
         return lRes;
 

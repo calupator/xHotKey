@@ -135,6 +135,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Beholder.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
@@ -200,18 +201,10 @@
     <None Include="Resources\appIcon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BeholderRC.cpp" />
+    <None Include="BeholderRC.h" />
     <Content Include="Resources\Settings.xml">
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="BEHOLDSERVICELib">
-      <Guid>{9F9E2341-A762-4FF4-9006-66024E29DDD1}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -229,6 +222,16 @@
       <ProductName>Установщик Windows 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="BEHOLDSERVICELib">
+      <Guid>{BADE98B6-B459-41F5-B998-4DB8A6D05C34}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

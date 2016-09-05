@@ -31,7 +31,7 @@ private:
 	bool             init;
 
 public:
-	CBeholderRC(void)
+	CBeholderRC()
 	{
 		init = false;
 		hLib = LoadLibrary("BeholdRC.dll");
@@ -72,13 +72,12 @@ END_COM_MAP()
 
 // IBeholderRC
 public:
-	STDMETHOD(Run)(BSTR bcstr);
-	STDMETHOD(GetRemoteEx)(ULONG* code);
-	STDMETHOD(GetRemote)(ULONG* code);
-	STDMETHOD(GetCount)(ULONG* count);
-	STDMETHOD(SelectCard)(ULONG* index/*, ULONG* succes*/);
-	STDMETHOD(get_Name)(ULONG index, BSTR* pVal);
-	STDMETHOD(Remote)(ULONG code, ULONG codeEx);
+	STDMETHOD(GetRemoteEx)(/*[out, retval]*/ ULONG* code);
+	STDMETHOD(GetRemote)(/*[out, retval]*/ ULONG* code);
+	STDMETHOD(SelectCard)(/*[in]*/ ULONG* index, /*[out, retval]*/ VARIANT_BOOL* succes);
+	STDMETHOD(Run)(/*[in]*/ BSTR* bcstr, /*[out, retval]*/ VARIANT_BOOL *succes);
+	STDMETHOD(get_Count)(/*[out, retval]*/ ULONG* count);
+	STDMETHOD(get_Name)(/*[in]*/ ULONG index, /*[out, retval]*/ BSTR *pVal);
 };
 
 #endif //__BEHOLDERRC_H_
