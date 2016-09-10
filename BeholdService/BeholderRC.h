@@ -12,7 +12,6 @@ typedef ULONG (__cdecl GETREMOTECODE) (void);		// Return the key pressed on remo
 typedef ULONG (__cdecl GETREMOTECODEEX) (void);		// Return the full 32-bit code of key pressed on remote contril unit
 typedef BOOL  (__cdecl UNINIT) (void);			// Free all resources
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CBeholderRC
 class ATL_NO_VTABLE CBeholderRC : 
@@ -72,12 +71,13 @@ END_COM_MAP()
 
 // IBeholderRC
 public:
+	STDMETHOD(SelectCard)(/*[in]*/ ULONG index, /*[out, retval]*/ VARIANT_BOOL* succes);
+	STDMETHOD(Run)(/*[in]*/ BSTR* bcstr, /*[out, retval]*/ VARIANT_BOOL *succes);
 	STDMETHOD(GetRemoteEx)(/*[out, retval]*/ ULONG* code);
 	STDMETHOD(GetRemote)(/*[out, retval]*/ ULONG* code);
-	STDMETHOD(SelectCard)(/*[in]*/ ULONG* index, /*[out, retval]*/ VARIANT_BOOL* succes);
-	STDMETHOD(Run)(/*[in]*/ BSTR* bcstr, /*[out, retval]*/ VARIANT_BOOL *succes);
-	STDMETHOD(get_Count)(/*[out, retval]*/ ULONG* count);
 	STDMETHOD(get_Name)(/*[in]*/ ULONG index, /*[out, retval]*/ BSTR *pVal);
+	STDMETHOD(get_IsInit)(/*[out, retval]*/ VARIANT_BOOL *pVal);
+	STDMETHOD(get_Count)(/*[out, retval]*/ ULONG *pVal);
 };
 
 #endif //__BEHOLDERRC_H_

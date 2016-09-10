@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Sep 05 19:32:04 2016
+/* at Sat Sep 10 18:08:16 2016
  */
 /* Compiler settings for .\BeholdService.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -83,30 +83,33 @@ EXTERN_C const IID IID_IBeholderRC;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("A3CABF23-7E52-4995-9927-605B1E8DB0E5")
+    MIDL_INTERFACE("274A76A7-C5D9-4BE8-9327-6D56F25D5AAB")
     IBeholderRC : public IDispatch
     {
     public:
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Count( 
+            /* [retval][out] */ ULONG *pVal) = 0;
+        
+        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_IsInit( 
+            /* [retval][out] */ VARIANT_BOOL *pVal) = 0;
+        
         virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Name( 
             /* [in] */ ULONG index,
             /* [retval][out] */ BSTR *pVal) = 0;
-        
-        virtual /* [helpstring][id][propget] */ HRESULT STDMETHODCALLTYPE get_Count( 
-            /* [retval][out] */ ULONG *count) = 0;
-        
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Run( 
-            /* [in] */ BSTR *bcstr,
-            /* [retval][out] */ VARIANT_BOOL *succes) = 0;
-        
-        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SelectCard( 
-            /* [in] */ ULONG *index,
-            /* [retval][out] */ VARIANT_BOOL *succes) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE GetRemote( 
             /* [retval][out] */ ULONG *code) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE GetRemoteEx( 
             /* [retval][out] */ ULONG *code) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE Run( 
+            /* [in] */ BSTR *bcstr,
+            /* [retval][out] */ VARIANT_BOOL *succes) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE SelectCard( 
+            /* [in] */ ULONG index,
+            /* [retval][out] */ VARIANT_BOOL *succes) = 0;
         
     };
     
@@ -157,24 +160,18 @@ EXTERN_C const IID IID_IBeholderRC;
             /* [out] */ EXCEPINFO *pExcepInfo,
             /* [out] */ UINT *puArgErr);
         
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Count )( 
+            IBeholderRC * This,
+            /* [retval][out] */ ULONG *pVal);
+        
+        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_IsInit )( 
+            IBeholderRC * This,
+            /* [retval][out] */ VARIANT_BOOL *pVal);
+        
         /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Name )( 
             IBeholderRC * This,
             /* [in] */ ULONG index,
             /* [retval][out] */ BSTR *pVal);
-        
-        /* [helpstring][id][propget] */ HRESULT ( STDMETHODCALLTYPE *get_Count )( 
-            IBeholderRC * This,
-            /* [retval][out] */ ULONG *count);
-        
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Run )( 
-            IBeholderRC * This,
-            /* [in] */ BSTR *bcstr,
-            /* [retval][out] */ VARIANT_BOOL *succes);
-        
-        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SelectCard )( 
-            IBeholderRC * This,
-            /* [in] */ ULONG *index,
-            /* [retval][out] */ VARIANT_BOOL *succes);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetRemote )( 
             IBeholderRC * This,
@@ -183,6 +180,16 @@ EXTERN_C const IID IID_IBeholderRC;
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *GetRemoteEx )( 
             IBeholderRC * This,
             /* [retval][out] */ ULONG *code);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *Run )( 
+            IBeholderRC * This,
+            /* [in] */ BSTR *bcstr,
+            /* [retval][out] */ VARIANT_BOOL *succes);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *SelectCard )( 
+            IBeholderRC * This,
+            /* [in] */ ULONG index,
+            /* [retval][out] */ VARIANT_BOOL *succes);
         
         END_INTERFACE
     } IBeholderRCVtbl;
@@ -220,23 +227,26 @@ EXTERN_C const IID IID_IBeholderRC;
     ( (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr) ) 
 
 
+#define IBeholderRC_get_Count(This,pVal)	\
+    ( (This)->lpVtbl -> get_Count(This,pVal) ) 
+
+#define IBeholderRC_get_IsInit(This,pVal)	\
+    ( (This)->lpVtbl -> get_IsInit(This,pVal) ) 
+
 #define IBeholderRC_get_Name(This,index,pVal)	\
     ( (This)->lpVtbl -> get_Name(This,index,pVal) ) 
-
-#define IBeholderRC_get_Count(This,count)	\
-    ( (This)->lpVtbl -> get_Count(This,count) ) 
-
-#define IBeholderRC_Run(This,bcstr,succes)	\
-    ( (This)->lpVtbl -> Run(This,bcstr,succes) ) 
-
-#define IBeholderRC_SelectCard(This,index,succes)	\
-    ( (This)->lpVtbl -> SelectCard(This,index,succes) ) 
 
 #define IBeholderRC_GetRemote(This,code)	\
     ( (This)->lpVtbl -> GetRemote(This,code) ) 
 
 #define IBeholderRC_GetRemoteEx(This,code)	\
     ( (This)->lpVtbl -> GetRemoteEx(This,code) ) 
+
+#define IBeholderRC_Run(This,bcstr,succes)	\
+    ( (This)->lpVtbl -> Run(This,bcstr,succes) ) 
+
+#define IBeholderRC_SelectCard(This,index,succes)	\
+    ( (This)->lpVtbl -> SelectCard(This,index,succes) ) 
 
 #endif /* COBJMACROS */
 
@@ -263,7 +273,7 @@ EXTERN_C const CLSID CLSID_BeholderRC;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("BF7C066C-904C-447E-A457-48B43F9D7959")
+class DECLSPEC_UUID("1929458C-10F9-4E69-9679-6F9E1273ABE5")
 BeholderRC;
 #endif
 #endif /* __BEHOLDSERVICELib_LIBRARY_DEFINED__ */

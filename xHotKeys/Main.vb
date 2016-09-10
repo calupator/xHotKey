@@ -1,34 +1,37 @@
 ﻿Imports System.IO
 Imports CoreAudioApi
+Imports BEHOLDSERVICELib
 
 Public Class Main
-    Private hk As New Dictionary(Of Integer, HotKey)
     Const FileSettings As String = "Settings.xml"
     Private device As MMDevice
-    Private beholder As New Beholder
+    Private HotK As ExecuteKeys ' Инициализация Beholder
+    Public Event HotKeys(ByVal ID As UInteger)
 
     Private Sub Form1_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         TrayIcon.Visible = False
 
-        Settings.SaveHK(hk)
+        Settings.SaveHK(ExecuteKeys.hk)
     End Sub
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        beholder.Run("notepad.exe")
-        Dim count As UInteger = beholder.Count
+
+        HotK = New ExecuteKeys
+        HotK.EventsRC.Run("notepad.exe")
+        ' Dim count As UInteger = beholder.EventsRC.Count
         cbTuner.Items.Clear()
-        For i = 0 To count - 1
-            cbTuner.Items.Add(beholder.Name(i))
+        For i = 0 To HotK.EventsRC.Count - 1
+            cbTuner.Items.Add(HotK.EventsRC.Name(i))
         Next
         cbTuner.SelectedIndex = cbTuner.FindString("Behold")
-        beholder.SelectCard(CULng(cbTuner.SelectedIndex))
+        HotK.EventsRC.SelectCard(CULng(cbTuner.SelectedIndex))
 
 
         Settings.File(FileSettings)
         HotKey.SetHandle(Me.Handle)
-        hk = Settings.LoadHK(Me.Handle)
+        ExecuteKeys.hk = Settings.LoadHK(Me.Handle)
 
-        For Each it As KeyValuePair(Of Integer, HotKey) In hk
+        For Each it As KeyValuePair(Of Integer, HotKey) In ExecuteKeys.hk
             it.Value.Register()
         Next
         Dim DevEnum As New MMDeviceEnumerator()
@@ -54,15 +57,9 @@ Public Class Main
         ' Listen for operating system messages
         Select Case (m.Msg)
             Case WM_HOTKEY
-                If hk.ContainsKey(m.WParam.ToInt32()) Then
-                    For Each it In hk
-                        ' Check that the ID is our key and we are registerd
-                        If it.Value.IsRegister AndAlso (m.WParam.ToInt32() = it.Value.GetID) Then
-                            ' Fire the event and pass on the event if our handlers didn't handle it
-                            it.Value.Execute()
-                        End If
-                    Next
-                End If
+            'If ExecuteKeys.hk.ContainsKey(m.WParam.ToInt32()) Then
+                RaiseEvent HotKeys(CUInt(m.WParam))
+                'End If
         End Select
         MyBase.WndProc(m)
     End Sub
@@ -89,7 +86,7 @@ Public Class Main
     End Sub
 
     Private Sub cbTuner_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbTuner.SelectedIndexChanged
-        If beholder.SelectCard(cbTuner.SelectedIndex) Then
+        If HotK.EventsRC.SelectCard(cbTuner.SelectedIndex) Then
             Label1.Text = "Инициализация выполнена успешно!"
             Label1.ForeColor = Color.Green
         Else
@@ -99,5 +96,9 @@ Public Class Main
 
     End Sub
 
+
+    Public Sub remot(ByVal k As UInteger)
+        MessageBox.Show("Код нажатой кнопки - " + Hex(k))
+    End Sub
 
 End Class

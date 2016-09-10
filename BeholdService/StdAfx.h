@@ -2,8 +2,8 @@
 //      or project specific include files that are used frequently,
 //      but are changed infrequently
 
-#if !defined(AFX_STDAFX_H__953BFF39_D06A_4B7F_A3BD_5C2A346C297E__INCLUDED_)
-#define AFX_STDAFX_H__953BFF39_D06A_4B7F_A3BD_5C2A346C297E__INCLUDED_
+#if !defined(AFX_STDAFX_H__93AFB45A_D4EC_4AC5_9280_C40E22A0728A__INCLUDED_)
+#define AFX_STDAFX_H__93AFB45A_D4EC_4AC5_9280_C40E22A0728A__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
@@ -57,4 +57,4 @@ extern CServiceModule _Module;
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
-#endif // !defined(AFX_STDAFX_H__953BFF39_D06A_4B7F_A3BD_5C2A346C297E__INCLUDED)
+#endif // !defined(AFX_STDAFX_H__93AFB45A_D4EC_4AC5_9280_C40E22A0728A__INCLUDED)

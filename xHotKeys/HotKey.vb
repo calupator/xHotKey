@@ -27,13 +27,14 @@ Public Class HotKey
     Private _workDir As String ' Рабочая папка
     Private _sound As String ' Звуковой файл
     Private _modif As Modifiers ' Модификаторы горячих клавиш
-    Private _vKey As Keys ' Код клавиши
+    Protected _vKey As Keys ' Код клавиши
     Private _winStyle As WindowState ' Статус окна свернуто, развернуто
     Private _priority As ProcessPriorityClass ' Приорирет процесса
     Private _cmd As Command ' Системная команда
     Private _isRegister As Boolean ' Флаг регистрации HotKey
     Private _id As Integer ' Идентификатор HotKey
     Private _newInst As Boolean ' Флаг, запускать новый или активировать имеющийся процесс
+    Public RemoteControl As Dictionary(Of UInteger, Beholder.ButtonRC)
 
     Public Sub New()
         'hwnd = Nothing
@@ -52,6 +53,7 @@ Public Class HotKey
         _newInst = False
         Dim DevEnum As New MMDeviceEnumerator()
         device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia)
+        RemoteControl = New Dictionary(Of UInteger, Beholder.ButtonRC)
     End Sub
 
     Public Shared Operator =(ByVal lhk As HotKey, ByVal rhk As HotKey) As Boolean
@@ -261,7 +263,7 @@ Public Class HotKey
             Case xHotKeys.Command.VolUp
                 device.AudioEndpointVolume.MasterVolumeLevelScalar += 5 / 100.0F
 
-            Case xHotKeys.Command.VoplDown
+            Case xHotKeys.Command.VolDown
                 device.AudioEndpointVolume.MasterVolumeLevelScalar -= 5 / 100.0F
 
         End Select

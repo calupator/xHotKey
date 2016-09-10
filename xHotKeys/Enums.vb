@@ -19,5 +19,5 @@ End Enum
 Public Enum Command
     None
     VolUp
-    VoplDown
+    VolDown
 End Enum

@@ -2,23 +2,23 @@ HKCR
 {
 	BeholdService.BeholderRC.1 = s 'BeholderRC Class'
 	{
-		CLSID = s '{BF7C066C-904C-447E-A457-48B43F9D7959}'
+		CLSID = s '{1929458C-10F9-4E69-9679-6F9E1273ABE5}'
 	}
 	BeholdService.BeholderRC = s 'BeholderRC Class'
 	{
-		CLSID = s '{BF7C066C-904C-447E-A457-48B43F9D7959}'
+		CLSID = s '{1929458C-10F9-4E69-9679-6F9E1273ABE5}'
 		CurVer = s 'BeholdService.BeholderRC.1'
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {BF7C066C-904C-447E-A457-48B43F9D7959} = s 'BeholderRC Class'
+		ForceRemove {1929458C-10F9-4E69-9679-6F9E1273ABE5} = s 'BeholderRC Class'
 		{
 			ProgID = s 'BeholdService.BeholderRC.1'
 			VersionIndependentProgID = s 'BeholdService.BeholderRC'
 			ForceRemove 'Programmable'
 			LocalServer32 = s '%MODULE%'
-			val AppID = s '{AF365512-25FC-4899-BF11-88D9CB2BF9FA}'
-			'TypeLib' = s '{BADE98B6-B459-41F5-B998-4DB8A6D05C34}'
+			val AppID = s '{B8A7D618-E7AF-4977-B782-1B4E904A2C6A}'
+			'TypeLib' = s '{A20C10C0-C90E-4998-B3EA-D2BCD7FF409D}'
 		}
 	}
 }

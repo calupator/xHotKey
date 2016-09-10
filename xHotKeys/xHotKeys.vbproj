@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="Beholder.vb" />
     <Compile Include="Enums.vb" />
+    <Compile Include="ExecuteKeys.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -201,8 +202,6 @@
     <None Include="Resources\appIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BeholderRC.cpp" />
-    <None Include="BeholderRC.h" />
     <Content Include="Resources\Settings.xml">
     </Content>
   </ItemGroup>
@@ -225,7 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="BEHOLDSERVICELib">
-      <Guid>{BADE98B6-B459-41F5-B998-4DB8A6D05C34}</Guid>
+      <Guid>{A20C10C0-C90E-4998-B3EA-D2BCD7FF409D}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>

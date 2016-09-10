@@ -2,10 +2,10 @@ HKCR
 {
 	NoRemove AppID
 	{
-		{AF365512-25FC-4899-BF11-88D9CB2BF9FA} = s 'BeholdService'
+		{B8A7D618-E7AF-4977-B782-1B4E904A2C6A} = s 'BeholdService'
 		'BeholdService.EXE'
 		{
-			val AppID = s {AF365512-25FC-4899-BF11-88D9CB2BF9FA}
+			val AppID = s {B8A7D618-E7AF-4977-B782-1B4E904A2C6A}
 		}
 	}
 }

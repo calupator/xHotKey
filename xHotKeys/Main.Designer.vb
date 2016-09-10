@@ -26,10 +26,11 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.tbMaster = New System.Windows.Forms.TrackBar
         Me.TrayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
-        'Me.txtHotKey = New System.Windows.Forms.TextBox
         Me.txtHotKey = New xHotKeys.WinHotKey
+        'Me.txtHotKey = New System.Windows.Forms.TextBox
         Me.cbTuner = New System.Windows.Forms.ComboBox
         Me.Label1 = New System.Windows.Forms.Label
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.tbMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -99,9 +100,10 @@ Partial Class Main
     Private WithEvents tbMaster As System.Windows.Forms.TrackBar
     Friend WithEvents TrayIcon As System.Windows.Forms.NotifyIcon
     Friend WithEvents cbTuner As System.Windows.Forms.ComboBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
 
     'Friend WithEvents txtHotKey As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents txtHotKey As xHotKeys.WinHotKey
 
 End Class

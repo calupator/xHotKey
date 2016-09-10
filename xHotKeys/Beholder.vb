@@ -2,15 +2,15 @@
 Imports System.Threading
 
 Public Class Beholder
-    Dim bh As IBeholderRC
-    Dim thGetKey As Thread
-    Public Event RemotKey(ByVal key As Integer)
+    Protected bh As IBeholderRC
+    Protected ThreadGetKey As Thread
+    Public Event RemoteKey(ByVal Key As UInteger)
 
 
     Public Sub New()
-        thGetKey = New Thread(New ThreadStart(AddressOf thGetKeyMethod))
-
         bh = New BeholderRC
+        ' ThreadGetKey = New Thread(New ThreadStart(AddressOf thGetKeyMethod))
+        'ThreadGetKey.Start()
     End Sub
 
     Dim t, g As Integer
@@ -56,8 +56,13 @@ Public Class Beholder
     Private Sub thGetKeyMethod()
         While (Not bh.isInit)
             Dim key As UInteger = bh.GetRemoteEx
-            If (key <> 0) Then RaiseEvent RemotKey(key)
+            If (key <> 0) Then RaiseEvent RemoteKey(key)
         End While
     End Sub
 
+    Structure ButtonRC
+        Public NameRC As String
+        Public Name As String
+        Public RemoteID As UInteger
+    End Structure
 End Class
