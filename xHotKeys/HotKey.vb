@@ -18,23 +18,24 @@ Public Class HotKey
     <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
     Private Shared Function UnregisterHotKey(ByVal hWnd As IntPtr, ByVal id As Integer) As Integer
     End Function
+
     Private device As MMDevice
 
-    Private Shared hwnd As IntPtr
+    Private Shared hwnd As IntPtr ' Handle окна 'Main'
     Private _name As String ' Название команды
     Private _exe As String ' Файл запуска
     Private _args As String ' Аргумент командной строки
     Private _workDir As String ' Рабочая папка
     Private _sound As String ' Звуковой файл
-    Private _modif As Modifiers ' Модификаторы горячих клавиш
+    Private _modif As Enums.Modifiers ' Модификаторы горячих клавиш
     Protected _vKey As Keys ' Код клавиши
-    Private _winStyle As WindowState ' Статус окна свернуто, развернуто
+    Private _winStyle As Enums.WindowState ' Статус окна свернуто, развернуто
     Private _priority As ProcessPriorityClass ' Приорирет процесса
-    Private _cmd As Command ' Системная команда
+    Private _cmd As Enums.Command ' Системная команда
     Private _isRegister As Boolean ' Флаг регистрации HotKey
     Private _id As Integer ' Идентификатор HotKey
     Private _newInst As Boolean ' Флаг, запускать новый или активировать имеющийся процесс
-    Public RemoteControl As Dictionary(Of UInteger, Beholder.ButtonRC)
+    Public RemoteControl As Dictionary(Of UInteger, Beholder.ButtonRC) ' Список кнопок пультов (код кнопки, имяПульта/имяКнопки/IDПульта)
 
     Public Sub New()
         'hwnd = Nothing
@@ -43,11 +44,11 @@ Public Class HotKey
         _args = ""
         _workDir = ""
         _sound = ""
-        _modif = Modifiers.None
+        _modif = Enums.Modifiers.None
         _vKey = Keys.None
-        _winStyle = WindowState.Normal
+        _winStyle = Enums.WindowState.Normal
         _priority = ProcessPriorityClass.Normal
-        _cmd = xHotKeys.Command.None
+        _cmd = Enums.Command.None
         _isRegister = False
         _id = GetHashCode()
         _newInst = False
@@ -77,11 +78,11 @@ Public Class HotKey
         _args = ""
         _workDir = ""
         _sound = ""
-        _modif = Modifiers.None
+        _modif = Enums.Modifiers.None
         _vKey = Keys.None
-        _winStyle = WindowState.Normal
+        _winStyle = Enums.WindowState.Normal
         _priority = ProcessPriorityClass.Normal
-        _cmd = xHotKeys.Command.None
+        _cmd = Enums.Command.None
         _isRegister = False
         _id = GetHashCode()
         _newInst = False
@@ -136,11 +137,11 @@ Public Class HotKey
         End Set
     End Property
 
-    Public Property Modifier() As Modifiers
+    Public Property Modifier() As Enums.Modifiers
         Get
             Return _modif
         End Get
-        Set(ByVal value As Modifiers)
+        Set(ByVal value As Enums.Modifiers)
             _modif = value
         End Set
     End Property
@@ -154,11 +155,11 @@ Public Class HotKey
         End Set
     End Property
 
-    Public Property WindowStyle() As WindowState
+    Public Property WindowStyle() As Enums.WindowState
         Get
             Return _winStyle
         End Get
-        Set(ByVal value As WindowState)
+        Set(ByVal value As Enums.WindowState)
             _winStyle = value
         End Set
     End Property
@@ -172,11 +173,11 @@ Public Class HotKey
         End Set
     End Property
 
-    Public Property Command() As Command
+    Public Property Command() As Enums.Command
         Get
             Return _cmd
         End Get
-        Set(ByVal value As Command)
+        Set(ByVal value As Enums.Command)
             _cmd = value
         End Set
     End Property
@@ -210,7 +211,7 @@ Public Class HotKey
         _isRegister = UnregisterHotKey(hwnd, _id)
     End Sub
 
-    ' Dim t, g As Integer
+    'Dim t, g As Integer
     'Dim k As Integer = 2
 
     Public Sub Execute()
@@ -244,11 +245,11 @@ Public Class HotKey
             'proc.StartInfo.WindowStyle = winStyle
             proc.PriorityClass = _priority
             Select Case _winStyle
-                Case WindowState.Normal
+                Case Enums.WindowState.Normal
                     SendMessage(proc.MainWindowHandle, &H112, &HF120, 0)
-                Case WindowState.Minimize
+                Case Enums.WindowState.Minimize
                     SendMessage(proc.MainWindowHandle, &H112, &HF020, 0)
-                Case WindowState.Maximize
+                Case Enums.WindowState.Maximize
                     SendMessage(proc.MainWindowHandle, &H112, &HF030, 0)
             End Select
         End If
@@ -260,11 +261,22 @@ Public Class HotKey
 
     Private Sub ShellCommand()
         Select Case _cmd
-            Case xHotKeys.Command.VolUp
-                device.AudioEndpointVolume.MasterVolumeLevelScalar += 5 / 100.0F
-
-            Case xHotKeys.Command.VolDown
-                device.AudioEndpointVolume.MasterVolumeLevelScalar -= 5 / 100.0F
+            Case Enums.Command.VolUp
+                Dim lvl As Single = device.AudioEndpointVolume.MasterVolumeLevelScalar
+                lvl += 5 / 100.0F
+                If lvl > 1 Then
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = 1
+                Else
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = lvl
+                End If
+            Case Enums.Command.VolDown
+                Dim lvl As Single = device.AudioEndpointVolume.MasterVolumeLevelScalar
+                lvl -= 5 / 100.0F
+                If lvl < 0 Then
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = 0
+                Else
+                    device.AudioEndpointVolume.MasterVolumeLevelScalar = lvl
+                End If
 
         End Select
     End Sub

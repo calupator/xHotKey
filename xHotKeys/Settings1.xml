@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="windows-1251"?>
-<HotKeys>
-  <HotKey Name="Блокнот" Key="78" Modifier="3" Sound="" Command="0" Path="notepad.exe" Argument="" WorkingDir="" WindowStyle="0" Priority="32" NewInstance="False" />
-  <HotKey Name="Громкость+" Key="40" Modifier="3" Sound="" Command="2" />
-  <HotKey Name="Громкость-" Key="38" Modifier="3" Sound="" Command="1" />
-</HotKeys>

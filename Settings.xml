@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <HotKeys>
-  <HotKey Name="Блокнот" Key="78" Modifier="3" Sound="" Command="0" CountRC="1" Path="notepad.exe" Argument="" WorkingDir="" WindowStyle="0" Priority="32" NewInstance="False">
+  <HotKey Name="Блокнот" Key="78" Modifier="3" Sound="" Command="0" Path="notepad.exe" Argument="" WorkingDir="" WindowStyle="0" Priority="32" NewInstance="False">
     <Beholder>
       <RemoteControl Code="16716270" NameRC="Microlab" NameButton="Balance R" RemoteID="123" />
     </Beholder>
   </HotKey>
-  <HotKey Name="Громкость+" Key="40" Modifier="3" Sound="" Command="1" CountRC="0">
-    <Beholder />
-  </HotKey>
-  <HotKey Name="Громкость-" Key="38" Modifier="3" Sound="" Command="2" CountRC="1">
+  <HotKey Name="Громкость+" Key="38" Modifier="3" Sound="" Command="1">
     <Beholder>
       <RemoteControl Code="16714485" NameRC="Microlab" NameButton="Sub-W+" RemoteID="123" />
+    </Beholder>
+  </HotKey>
+  <HotKey Name="Громкость-" Key="40" Modifier="3" Sound="" Command="2">
+    <Beholder>
+      <RemoteControl Code="16715505" NameRC="Microlab" NameButton="Sub-W-" RemoteID="123" />
     </Beholder>
   </HotKey>
 </HotKeys>

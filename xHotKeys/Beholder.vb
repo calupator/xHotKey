@@ -2,67 +2,63 @@
 Imports System.Threading
 
 Public Class Beholder
-    Protected bh As IBeholderRC
-    Protected ThreadGetKey As Thread
-    Public Event RemoteKey(ByVal Key As UInteger)
+    Protected Shared bh As IBeholderRC = New BeholderRC
 
+    Private Shared index As Integer = 0
 
-    Public Sub New()
-        bh = New BeholderRC
-        ' ThreadGetKey = New Thread(New ThreadStart(AddressOf thGetKeyMethod))
-        'ThreadGetKey.Start()
-    End Sub
+    Public Shared ReadOnly Property IsInit() As Boolean
+        Get
+            Return bh.IsInit
+        End Get
+    End Property
 
-    Dim t, g As Integer
-    Dim k As Integer = 2
-
-    Public Sub Execute()
-        If k = 2 Then
-            t = Environment.TickCount
-            k -= 1
-        Else
-            g = Environment.TickCount
-            If ((g - t) < 500) Then
-                k -= 1
-                If k = 0 Then
-                    MessageBox.Show("тройной")
-                    k = 2
-                End If
-            End If
-        End If
-        t = Environment.TickCount
-    End Sub
-
-    Public ReadOnly Property Count() As Integer
+    Public Shared ReadOnly Property Count() As Integer
         Get
             Return CInt(bh.Count)
         End Get
     End Property
 
-    Public ReadOnly Property Name(ByVal i As Integer) As String
+    Public Shared ReadOnly Property SelectedCard() As Integer
+        Get
+            Return index
+        End Get
+    End Property
+
+    Public Shared ReadOnly Property Name(ByVal i As Integer) As String
         Get
             Return bh.Name(CUInt(i))
         End Get
     End Property
 
-    Public Function SelectCard(ByVal i As Integer) As Boolean
-        Return bh.SelectCard(CUInt(i))
+    Public Shared Function SelectCard(ByVal i As Integer) As Boolean
+        If (bh.SelectCard(CUInt(i))) Then
+            index = i
+            Return True
+        Else
+            index = -1
+            Return False
+        End If
     End Function
 
-    Public Function Run(ByVal path As String) As Boolean
+    Public Shared Function Run(ByVal path As String) As Boolean
         Return bh.Run(path)
     End Function
 
-    Private Sub thGetKeyMethod()
-        While (Not bh.isInit)
-            Dim key As UInteger = bh.GetRemoteEx
-            If (key <> 0) Then RaiseEvent RemoteKey(key)
-        End While
-    End Sub
+    Public Shared Function GetRemote()
+        Return bh.GetRemote
+    End Function
+
+    Public Shared Function GetRemoteEx()
+        Return bh.GetRemoteEx
+    End Function
 
     Structure ButtonRC
         Public NameRC As String
-        Public Name As String
+        Public NameButton As String
         Public RemoteID As UInteger
     End Structure
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
 End Class

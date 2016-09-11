@@ -5,6 +5,22 @@ Imports System.ComponentModel
 Public NotInheritable Class WinHotKey
     Inherits TextBox
 
+    <DllImport("user32", SetLastError:=True)> _
+    Public Overloads Shared Function SetWindowsHookEx(ByVal idHook As Integer, ByVal lpfn As WKCallBack, ByVal hMod As IntPtr, ByVal dwThreadId As Integer) As IntPtr
+    End Function
+
+    <DllImport("user32", SetLastError:=True)> _
+    Public Shared Function UnhookWindowsHookEx(ByVal hook As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+    End Function
+
+    <DllImport("user32")> _
+    Public Overloads Shared Function CallNextHookEx(ByVal hhk As IntPtr, ByVal nCode As Integer, ByVal wParam As IntPtr, ByRef lParam As KeyboardData) As IntPtr
+    End Function
+
+    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
+    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+    End Function
+
     Dim vkName As New List(Of String)
 
     <MarshalAs(UnmanagedType.FunctionPtr)> _
@@ -289,7 +305,6 @@ Public NotInheritable Class WinHotKey
             .Add("Clear")
             .Add("Unknown")
         End With
-
     End Sub
 
     Private Function KeyboardProc(ByVal nCode As Integer, ByVal wParam As IntPtr, ByRef lParam As KeyboardData) As IntPtr
@@ -394,6 +409,7 @@ Public NotInheritable Class WinHotKey
         End If
     End Sub
 
+    <DebuggerHiddenAttribute()> _
     Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
         Select Case m.Msg
             Case WM_CHAR, WM_SETCURSOR
@@ -453,21 +469,6 @@ Public NotInheritable Class WinHotKey
         MOD_WIN = 8
     End Enum
 
-    <DllImport("user32", SetLastError:=True)> _
-    Public Overloads Shared Function SetWindowsHookEx(ByVal idHook As Integer, ByVal lpfn As WKCallBack, ByVal hMod As IntPtr, ByVal dwThreadId As Integer) As IntPtr
-    End Function
-
-    <DllImport("user32", SetLastError:=True)> _
-    Public Shared Function UnhookWindowsHookEx(ByVal hook As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
-    End Function
-
-    <DllImport("user32")> _
-    Public Overloads Shared Function CallNextHookEx(ByVal hhk As IntPtr, ByVal nCode As Integer, ByVal wParam As IntPtr, ByRef lParam As KeyboardData) As IntPtr
-    End Function
-
-    <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)> _
-    Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-    End Function
 
     Structure KeyboardData
         Public vkCode As Integer
@@ -533,6 +534,7 @@ Public NotInheritable Class WinHotKey
         End Select
         SetText()
     End Sub
+
     Private Sub Menu()
         ContextMenu = New ContextMenu
         Dim MenuItem, subMenu As New MenuItem

@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Sat Sep 10 18:08:16 2016
+/* at Sun Sep 11 17:09:14 2016
  */
 /* Compiler settings for .\BeholdService.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
