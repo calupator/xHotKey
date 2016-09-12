@@ -26,13 +26,15 @@ Partial Class Main
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.tbMaster = New System.Windows.Forms.TrackBar
         Me.TrayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
-        'Me.txtHotKey = New System.Windows.Forms.TextBox
-        Me.txtHotKey = New xHotKeys.WinHotKey
+        Me.MainMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.mnuOptions = New System.Windows.Forms.ToolStripMenuItem
+        Me.mnuExit = New System.Windows.Forms.ToolStripMenuItem
         Me.cbTuner = New System.Windows.Forms.ComboBox
         Me.Label1 = New System.Windows.Forms.Label
         Me.TimerGetRemote = New System.Windows.Forms.Timer(Me.components)
         Me.Label2 = New System.Windows.Forms.Label
         CType(Me.tbMaster, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MainMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'tbMaster
@@ -50,22 +52,34 @@ Partial Class Main
         '
         'TrayIcon
         '
+        Me.TrayIcon.ContextMenuStrip = Me.MainMenu
         Me.TrayIcon.Text = "NotifyIcon1"
         Me.TrayIcon.Visible = True
         '
-        'txtHotKey
+        'MainMenu
         '
-        Me.txtHotKey.Location = New System.Drawing.Point(266, 289)
-        Me.txtHotKey.Name = "txtHotKey"
-        Me.txtHotKey.Size = New System.Drawing.Size(185, 20)
-        Me.txtHotKey.TabIndex = 3
-        Me.txtHotKey.Text = "Ctrl + R"
+        Me.MainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuOptions, Me.mnuExit})
+        Me.MainMenu.Name = "MainMenu"
+        Me.MainMenu.Size = New System.Drawing.Size(153, 70)
+        '
+        'mnuOptions
+        '
+        Me.mnuOptions.DoubleClickEnabled = True
+        Me.mnuOptions.Name = "mnuOptions"
+        Me.mnuOptions.Size = New System.Drawing.Size(152, 22)
+        Me.mnuOptions.Text = "Параметры"
+        '
+        'mnuExit
+        '
+        Me.mnuExit.Name = "mnuExit"
+        Me.mnuExit.Size = New System.Drawing.Size(152, 22)
+        Me.mnuExit.Text = "Выход"
         '
         'cbTuner
         '
         Me.cbTuner.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbTuner.FormattingEnabled = True
-        Me.cbTuner.Location = New System.Drawing.Point(12, 12)
+        Me.cbTuner.Location = New System.Drawing.Point(12, 46)
         Me.cbTuner.Name = "cbTuner"
         Me.cbTuner.Size = New System.Drawing.Size(237, 21)
         Me.cbTuner.TabIndex = 4
@@ -73,7 +87,7 @@ Partial Class Main
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 36)
+        Me.Label1.Location = New System.Drawing.Point(9, 70)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 5
@@ -100,7 +114,6 @@ Partial Class Main
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cbTuner)
-        Me.Controls.Add(Me.txtHotKey)
         Me.Controls.Add(Me.tbMaster)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -108,6 +121,7 @@ Partial Class Main
         Me.Name = "Main"
         Me.Text = "xHotKeys"
         CType(Me.tbMaster, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MainMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -118,8 +132,8 @@ Partial Class Main
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents TimerGetRemote As System.Windows.Forms.Timer
-
-    'Friend WithEvents txtHotKey As System.Windows.Forms.TextBox
-    Friend WithEvents txtHotKey As xHotKeys.WinHotKey
+    Friend WithEvents MainMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents mnuExit As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuOptions As System.Windows.Forms.ToolStripMenuItem
 
 End Class

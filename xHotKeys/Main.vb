@@ -4,8 +4,8 @@ Imports BEHOLDSERVICELib
 
 Public Class Main
     Const FileSettings As String = "Settings.xml"
-    Private device As MMDevice ' Инициализация класса громкости
-    Private HotK As ExecuteKeys ' Инициализация класса 
+    'Private device As MMDevice ' Инициализация класса громкости
+    Public Shared HotK As ExecuteKeys ' Инициализация класса 
 
     Private Sub Form1_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
         TrayIcon.Visible = False
@@ -42,9 +42,12 @@ Public Class Main
         TimerGetRemote.Start()
 
         Dim DevEnum As New MMDeviceEnumerator()
-        device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia)
-        tbMaster.Value = CInt(Fix(device.AudioEndpointVolume.MasterVolumeLevelScalar * 100))
-        AddHandler device.AudioEndpointVolume.OnVolumeNotification, New AudioEndpointVolumeNotificationDelegate(AddressOf AudioEndpointVolume_OnVolumeNotification)
+        HotKey.device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia)
+        tbMaster.Value = CInt(Fix(HotKey.device.AudioEndpointVolume.MasterVolumeLevelScalar * 100))
+        AddHandler HotKey.device.AudioEndpointVolume.OnVolumeNotification, New AudioEndpointVolumeNotificationDelegate(AddressOf AudioEndpointVolume_OnVolumeNotification)
+        Dim Opt As New SettingsForm
+        Opt.ShowDialog()
+
     End Sub
 
     Private Sub AudioEndpointVolume_OnVolumeNotification(ByVal data As AudioVolumeNotificationData)
@@ -72,7 +75,7 @@ Public Class Main
     End Sub
 
     Private Sub tbMaster_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbMaster.Scroll
-        device.AudioEndpointVolume.MasterVolumeLevelScalar = (CSng(tbMaster.Value) / 100.0F)
+        HotKey.device.AudioEndpointVolume.MasterVolumeLevelScalar = (CSng(tbMaster.Value) / 100.0F)
     End Sub
     Public Sub New()
         ' Этот вызов необходим конструктору форм Windows.
@@ -140,5 +143,15 @@ Public Class Main
                 remote(key, Enums.EventType.RemoteControl)
             End If
         End If
+    End Sub
+
+    Private Sub mnuExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuExit.Click
+        Dim retVal As New System.ComponentModel.CancelEventArgs
+        Application.Exit(retVal)
+    End Sub
+
+    Private Sub mnuOptions_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mnuOptions.Click
+        Dim Opt As New SettingsForm
+        Opt.ShowDialog()
     End Sub
 End Class

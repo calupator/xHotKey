@@ -21,6 +21,21 @@
         None
         VolUp
         VolDown
+        ''' <summary>LockWorkStation</summary>
+        ''' <remarks></remarks>
+        LockWorkStation
+        ''' <summary>Мягкая перезагрузка</summary>
+        ''' <remarks></remarks>
+        RebootSoft
+        ''' <summary>Жесткая перезагрузка</summary>
+        ''' <remarks></remarks>
+        RebootHard
+        ''' <summary>Мягкое выключение</summary>
+        ''' <remarks></remarks>
+        ShutdownSoft
+        ''' <summary>Жесткое выключение</summary>
+        ''' <remarks></remarks>
+        ShutdownHard
     End Enum
 
     Public Enum EventType As Integer ' Тип вызвавшего события
@@ -30,6 +45,7 @@
         ''' <summary>Событие типа RemoteControl</summary>
         ''' <remarks></remarks>
         RemoteControl
+
     End Enum
 
 End Namespace

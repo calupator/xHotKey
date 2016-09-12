@@ -19,7 +19,7 @@ Public Class HotKey
     Private Shared Function UnregisterHotKey(ByVal hWnd As IntPtr, ByVal id As Integer) As Integer
     End Function
 
-    Private device As MMDevice
+    Public Shared device As MMDevice
 
     Private Shared hwnd As IntPtr ' Handle окна 'Main'
     Private _name As String ' Название команды
@@ -277,7 +277,8 @@ Public Class HotKey
                 Else
                     device.AudioEndpointVolume.MasterVolumeLevelScalar = lvl
                 End If
-
+            Case Enums.Command.LockWorkStation
+                Reboot.Lock()
         End Select
     End Sub
 
@@ -285,4 +286,29 @@ Public Class HotKey
         Unregister()
         MyBase.Finalize()
     End Sub
+
+    Public Overrides Function ToString() As String
+        Dim str As String = ""
+        If _modif And Enums.Modifiers.Windows Then
+            str = "Win + "
+        End If
+        If _modif And Enums.Modifiers.Control Then
+            str += "Ctrl + "
+        End If
+        If _modif And Enums.Modifiers.Alt Then
+            str += "Alt + "
+        End If
+        If _modif And Enums.Modifiers.Shift Then
+            str += "Shift + "
+        End If
+
+        If _vKey <> 0 Then
+            str += _vKey.ToString
+        End If
+        If str = "" Then
+            str = "None"
+        End If
+        Return str
+    End Function
+
 End Class
