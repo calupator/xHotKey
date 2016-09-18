@@ -9,30 +9,30 @@
 
 STDMETHODIMP CBeholderRC::get_Count(ULONG *pVal)
 {
-	*pVal = pGetCardCount();
+	*pVal = m_pGetCardCount();
 
 	return S_OK;
 }
 
 STDMETHODIMP CBeholderRC::get_IsInit(VARIANT_BOOL *pVal)
 {
-	*pVal = init;
+	*pVal = m_init;
 
 	return S_OK;
 }
 
 STDMETHODIMP CBeholderRC::get_Name(ULONG index, BSTR *pVal)
 {
-	*pVal = A2BSTR(pGetCardName(index));
+	*pVal = A2BSTR(m_pGetCardName(index));
 
 	return S_OK;
 }
 
 STDMETHODIMP CBeholderRC::GetRemote(ULONG *code)
 {
-	if (hLib && init)
+	if (m_hLib && m_init)
 	{
-		*code = pGetRemoteCode();
+		*code = m_pGetRemoteCode();
 		if (*code < 255)
 		{
 			*code;
@@ -46,15 +46,15 @@ STDMETHODIMP CBeholderRC::GetRemote(ULONG *code)
 
 STDMETHODIMP CBeholderRC::GetRemoteEx(ULONG *code)
 {
-	if (hLib && init)
+	if (m_hLib && m_init)
 	{
-		if (pGetRemoteCodeEx)
+		if (m_pGetRemoteCodeEx)
 		{
-			*code = pGetRemoteCodeEx();
+			*code = m_pGetRemoteCodeEx();
 			return S_OK;
 		}
 			// The BeholdTV software has old BeholdRC.dll. Emulate extended function
-		*code = pGetRemoteCode();
+		*code = m_pGetRemoteCode();
 		if (*code < 255)
 		{
 			// Combine full NEC-standard code
@@ -80,19 +80,19 @@ STDMETHODIMP CBeholderRC::SelectCard(ULONG index, VARIANT_BOOL *succes)
 {
 	ULONG  i, cnt;
 	*succes = false;
-	if (index >= 0 && hLib)
+	if (index >= 0 && m_hLib)
 	{
-		cnt = pGetCardCount();
+		cnt = m_pGetCardCount();
 		if (cnt > index)
 		{
 			for (i = 0; i < cnt; ++i)
 			{
-				if (pOpenCard(i))
+				if (m_pOpenCard(i))
 				{
 					if (index == 0)
 					{
-						init = true;
-						*succes = init;
+						m_init = true;
+						*succes = m_init;
 						return S_OK;
 					}
 					--index;
@@ -100,8 +100,20 @@ STDMETHODIMP CBeholderRC::SelectCard(ULONG index, VARIANT_BOOL *succes)
 			}
 		}
 	}
-	init = false;
-	*succes = init;
+	m_init = false;
+	*succes = m_init;
+
+	return S_OK;
+}
+
+STDMETHODIMP CBeholderRC::UnInit(void)
+{
+	if (m_pUnInit)
+	{
+		m_pUnInit();
+	}
+	FreeLibrary(m_hLib);
+	m_hLib = NULL;
 
 	return S_OK;
 }

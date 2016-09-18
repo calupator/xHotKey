@@ -20,45 +20,42 @@ class ATL_NO_VTABLE CBeholderRC :
 	public IDispatchImpl<IBeholderRC, &IID_IBeholderRC, &LIBID_BEHOLDSERVICELib>
 {
 private:
-	GETREMOTECODEEX* pGetRemoteCodeEx;
-	GETREMOTECODE*   pGetRemoteCode;
-	GETCARDCOUNT*    pGetCardCount;
-	OPENCARD*        pOpenCard;
-	UNINIT*          pUnInit;
-	GETCARDNAME*     pGetCardName;
-	HMODULE          hLib;
-	bool             init;
+	GETREMOTECODEEX* m_pGetRemoteCodeEx;
+	GETREMOTECODE*   m_pGetRemoteCode;
+	GETCARDCOUNT*    m_pGetCardCount;
+	OPENCARD*        m_pOpenCard;
+	UNINIT*          m_pUnInit;
+	GETCARDNAME*     m_pGetCardName;
+	HMODULE          m_hLib;
+	bool             m_init;
 
 public:
 	CBeholderRC()
 	{
-		init = false;
-		hLib = LoadLibrary("BeholdRC.dll");
-		if (hLib)
+		m_init = false;
+		m_hLib = LoadLibrary("BeholdRC.dll");
+		if (m_hLib)
 		{
-			pGetCardCount    = (GETCARDCOUNT*)    GetProcAddress(hLib, "GetCardCount");
-			pOpenCard        = (OPENCARD*)        GetProcAddress(hLib, "OpenCard");
-			pGetRemoteCode   = (GETREMOTECODE*)   GetProcAddress(hLib, "GetRemoteCode");
-			pGetRemoteCodeEx = (GETREMOTECODEEX*) GetProcAddress(hLib, "GetRemoteCodeEx");
-			pUnInit          = (UNINIT*)          GetProcAddress(hLib, "UnInit");
-			pGetCardName     = (GETCARDNAME*)     GetProcAddress(hLib, "GetCardName");
-			if (!pGetCardCount || !pOpenCard || !pGetRemoteCode || !pUnInit || !pGetCardName)
+			m_pGetCardCount    = (GETCARDCOUNT*)    GetProcAddress(m_hLib, "GetCardCount");
+			m_pOpenCard        = (OPENCARD*)        GetProcAddress(m_hLib, "OpenCard");
+			m_pGetRemoteCode   = (GETREMOTECODE*)   GetProcAddress(m_hLib, "GetRemoteCode");
+			m_pGetRemoteCodeEx = (GETREMOTECODEEX*) GetProcAddress(m_hLib, "GetRemoteCodeEx");
+			m_pUnInit          = (UNINIT*)          GetProcAddress(m_hLib, "UnInit");
+			m_pGetCardName     = (GETCARDNAME*)     GetProcAddress(m_hLib, "GetCardName");
+			if (!m_pGetCardCount || !m_pOpenCard || !m_pGetRemoteCode || !m_pUnInit || !m_pGetCardName)
 			{	// GetRemoteCodeEx may be absent in library. Don't check for it.
-				FreeLibrary(hLib);
-				hLib = NULL;
+				FreeLibrary(m_hLib);
+				m_hLib = NULL;
 			}
 		}
 	}
 
 	virtual ~CBeholderRC(void)
 	{
-		if (pUnInit)
-		{
-			pUnInit();
-		}
-		FreeLibrary(hLib);
-		hLib = NULL;
+		UnInit();
 	}
+
+
 
 DECLARE_REGISTRY_RESOURCEID(IDR_BEHOLDERRC)
 
@@ -78,6 +75,7 @@ public:
 	STDMETHOD(get_Name)(/*[in]*/ ULONG index, /*[out, retval]*/ BSTR *pVal);
 	STDMETHOD(get_IsInit)(/*[out, retval]*/ VARIANT_BOOL *pVal);
 	STDMETHOD(get_Count)(/*[out, retval]*/ ULONG *pVal);
+	STDMETHOD(UnInit)(void);
 };
 
 #endif //__BEHOLDERRC_H_

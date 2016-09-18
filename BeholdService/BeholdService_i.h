@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0500 */
-/* at Mon Sep 12 20:53:24 2016
+/* at Sun Sep 18 22:21:08 2016
  */
 /* Compiler settings for .\BeholdService.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -111,6 +111,8 @@ EXTERN_C const IID IID_IBeholderRC;
             /* [in] */ ULONG index,
             /* [retval][out] */ VARIANT_BOOL *succes) = 0;
         
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE UnInit( void) = 0;
+        
     };
     
 #else 	/* C style interface */
@@ -191,6 +193,9 @@ EXTERN_C const IID IID_IBeholderRC;
             /* [in] */ ULONG index,
             /* [retval][out] */ VARIANT_BOOL *succes);
         
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *UnInit )( 
+            IBeholderRC * This);
+        
         END_INTERFACE
     } IBeholderRCVtbl;
 
@@ -247,6 +252,9 @@ EXTERN_C const IID IID_IBeholderRC;
 
 #define IBeholderRC_SelectCard(This,index,succes)	\
     ( (This)->lpVtbl -> SelectCard(This,index,succes) ) 
+
+#define IBeholderRC_UnInit(This)	\
+    ( (This)->lpVtbl -> UnInit(This) ) 
 
 #endif /* COBJMACROS */
 

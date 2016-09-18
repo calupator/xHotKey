@@ -22,6 +22,7 @@ import "ocidl.idl";
 		[id(5), helpstring("method GetRemoteEx")] HRESULT GetRemoteEx([out, retval] ULONG* code);
 		[id(6), helpstring("method Run")] HRESULT Run([in] BSTR* bcstr, [out, retval] VARIANT_BOOL *succes);
 		[id(7), helpstring("method SelectCard")] HRESULT SelectCard([in] ULONG index, [out, retval] VARIANT_BOOL* succes);
+		[id(8), helpstring("метод UnInit")] HRESULT UnInit(void);
 	};
 
 [
