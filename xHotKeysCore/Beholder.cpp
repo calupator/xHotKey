@@ -2,6 +2,7 @@
 #include "Beholder.h"
 
 namespace xHotKeyCore{
+
 bool Beholder::IsInit(void)
 {
 	return m_Tuner->IsInit;
@@ -22,7 +23,7 @@ wchar_t* Beholder::GetName(unsigned long i)
 	return m_Tuner->Name[i];
 }
 
-bool Beholder::GetSelectCard(unsigned long i)
+bool Beholder::SelectCard(unsigned long i)
 {
 	if (m_Tuner->SelectCard(i))
 	{
@@ -50,4 +51,5 @@ unsigned long Beholder::GetRemoteEx(void)
 {
 	return m_Tuner->GetRemoteEx();
 }
-} // namespace xHotKeyCore
+
+} // end namespace xHotKeyCore

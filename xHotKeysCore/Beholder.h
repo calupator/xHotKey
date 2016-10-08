@@ -1,6 +1,7 @@
 #pragma once
 
-#define XHKCORE_API __declspec(dllexport)
+#include <string>
+#include "Global.h"
 
 #ifdef _DEBUG
 #import "..\Debug\BeholdService.tlb"
@@ -8,6 +9,7 @@
 #import "..\Release\BeholdService.tlb"
 #endif
 
+using namespace std;
 using namespace BEHOLDSERVICELib;
 
 namespace xHotKeyCore{
@@ -16,14 +18,14 @@ class XHKCORE_API Beholder
 {
 private:
 	IBeholderRCPtr m_Tuner;
-	unsigned long m_lIndex;
+	unsigned long  m_lIndex;
 
 public:
 
 	Beholder(void)
 	{
 		m_lIndex = 0;
-		m_Tuner = IBeholderRCPtr(__uuidof(BeholderRC));
+		m_Tuner  = IBeholderRCPtr(__uuidof(BeholderRC));
 	}
 
 	~Beholder(void)
@@ -35,16 +37,17 @@ public:
 	unsigned long GetCount(void);
 	unsigned long GetSelectedCard(void);
 	wchar_t* GetName(unsigned long i);
-	bool GetSelectCard(unsigned long i);
+	bool SelectCard(unsigned long i);
 	bool Run(wchar_t* path);
 	unsigned long GetRemote(void);
 	unsigned long GetRemoteEx(void);
 
 	struct ButtonRC
 	{
-		wchar_t* NameRC;
-        wchar_t* NameButton;
-        unsigned long RemoteID;
+		string NameRC;
+        string NameButton;
+        long   RemoteID;
 	};
 };
-} // namespace xHotKeyCore
+
+} // end namespace xHotKeyCore

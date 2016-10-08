@@ -92,8 +92,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(PlatformName)\"
-			IntermediateDirectory="$(ConfigurationName)\$(PlatformName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(PlatformName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(PlatformName)"
 			ConfigurationType="2"
 			CharacterSet="2"
 			>
@@ -238,8 +238,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(PlatformName)"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(PlatformName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -324,6 +324,18 @@
 				RelativePath=".\Beholder.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\HotKey.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Settings.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\xHotKeysCore.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Заголовочные файлы"
@@ -332,6 +344,22 @@
 			>
 			<File
 				RelativePath=".\Beholder.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Global.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HotKey.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Settings.h"
+				>
+			</File>
+			<File
+				RelativePath=".\xHotKeysCore.h"
 				>
 			</File>
 		</Filter>
@@ -428,12 +456,24 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="TinyXML"
+			>
 			<File
-				RelativePath=".\xHotKeysCore.cpp"
+				RelativePath=".\TinyXML\tinyxml.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\xHotKeysCore.h"
+				RelativePath=".\TinyXML\tinyxml.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TinyXML\tinyxmlerror.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TinyXML\tinyxmlparser.cpp"
 				>
 			</File>
 		</Filter>

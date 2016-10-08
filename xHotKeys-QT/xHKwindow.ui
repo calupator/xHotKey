@@ -1,12 +1,15 @@
-<ui version="4.0">
- <class>xHKWindow</class>
- <widget class="QMainWindow" name="xHKWindow" >
+<UI version="4.0" >
+ <class>xHKWindowClass</class>
+ <widget class="QMainWindow" name="xHKWindowClass" >
+  <property name="objectName" >
+   <string notr="true">xHKWindowClass</string>
+  </property>
   <property name="geometry" >
    <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>300</height>
+	<x>0</x>
+	<y>0</y>
+	<width>600</width>
+	<height>400</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -19,6 +22,8 @@
  </widget>
  <layoutDefault spacing="6" margin="11" />
  <pixmapfunction></pixmapfunction>
- <resources/>
+ <resources>
+   <include location="xHKWindow.qrc"/>
+ </resources>
  <connections/>
-</ui>
+</UI>

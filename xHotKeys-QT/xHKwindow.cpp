@@ -1,14 +1,12 @@
-#include "xHKwindow.h"
-#include "ui_xHKwindow.h"
+#include "xHKWindow.h"
 
-xHKWindow::xHKWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::xHKWindow)
+xHKWindow::xHKWindow(QWidget *parent)
+	: QMainWindow(parent)
 {
-    ui->setupUi(this);
+	ui.setupUi(this);
 }
 
 xHKWindow::~xHKWindow()
 {
-    delete ui;
+
 }

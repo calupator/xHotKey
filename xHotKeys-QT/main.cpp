@@ -1,18 +1,10 @@
-#include "xHKwindow.h"
-#include <QApplication>
-
-#include "..\xHotKeysCore\Beholder.h"
-using namespace xHotKeyCore;
+#include "xHKWindow.h"
+#include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    xHKWindow w;
-    w.show();
-
-    Beholder* bh = new Beholder();
-    QString name = QString::fromWCharArray(bh->GetName(0));
-    delete bh;
-
-    return a.exec();
+	QApplication a(argc, argv);
+	xHKWindow w;
+	w.show();
+	return a.exec();
 }
